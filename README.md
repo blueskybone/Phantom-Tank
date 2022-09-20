@@ -1,5 +1,5 @@
 # Phantom-Tank
-幻影坦克，命令行
+幻影坦克，windows命令行
 
 ### 使用方法：
 ```
@@ -24,4 +24,7 @@ result 为可选参数，缺省为result.png
 ![image](https://github.com/blueskybone/Phantom-Tank/blob/master/out.png)
 
 ### 依赖
-Opencv 3.4.6
+
+Opencv-2.4.9
+
+release版本已打包相关依赖，解压可用
