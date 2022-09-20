@@ -6,4 +6,5 @@
 tank file1 file2 result
 ```
 file1、file2 为必选参数，file1为表图，file2为里图
+
 result 为可选参数，缺省值为result.png
