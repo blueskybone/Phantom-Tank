@@ -4,13 +4,14 @@
 #include <cstring>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
-
+#define MAX_LENTH 50
 using namespace cv;
 using namespace std;
+
 // 按照R:G:B = 3:6:1转灰度图
 Mat RGB_to_grey(Mat &img, int w, int h)
 {
-	//遍历图像，转为灰度图
+	//遍历图像
 	for (int row = 0; row < h; row++) 
 	{
 		uchar* uc_pixel = img.data + row*img.step;
@@ -26,6 +27,7 @@ Mat RGB_to_grey(Mat &img, int w, int h)
 	// imshow("grey", img);waitKey(3000);
 	return img;
 }
+
 // 表图添加白色蒙版
 Mat above_add_white(Mat &img, int w, int h)
 {
@@ -43,6 +45,7 @@ Mat above_add_white(Mat &img, int w, int h)
 	// imshow("white", img);imwrite("white.png", img);waitKey(3000);
 	return img;
 }
+
 // 里图添加黑色蒙版
 Mat under_add_black(Mat &img, int w, int h)
 {
@@ -60,6 +63,7 @@ Mat under_add_black(Mat &img, int w, int h)
 	// imshow("black", img); imwrite("black.png", img); waitKey(3000);
 	return img;
 }
+
 // 合成幻影坦克
 Mat create_tank(Mat & img_a, Mat & img_u, Mat & img_r, int w, int h)
 {
@@ -85,14 +89,16 @@ Mat create_tank(Mat & img_a, Mat & img_u, Mat & img_r, int w, int h)
 	//imshow("result", img_r); waitKey(3000);
 	return img_r;
 }
+
 // 拼接字符串
 void strcat_m(char * a, char * b, char * r)
 {
 	int i = 0, j = 0;
-	memset(r, 0, 50);
+	memset(r, 0, MAX_LENTH);
 	while (a[i] != '\0'){ r[i] = a[i]; i++; }
 	while (b[j] != '\0'){ r[i++] = b[j++];}
 }
+
 // 错误信息
 void wrong_msg(int state)
 {
@@ -111,14 +117,14 @@ void wrong_msg(int state)
 	}
 	
 }
+
 int main(int argc, char *argv[])
 {
-	int opt = 0;
 	char* above_file;
 	char* under_file;
-	char re_file[50] = "result.png";	//默认输出文件名
+	char re_file[MAX_LENTH] = "result.png";	//默认输出文件名
 
-	// 想单独写个命令行解析器，发现太麻烦，先凑合下
+	// 本想单独写个命令行解析器模仿python，发现太麻烦，凑合下
 	if (argc < 2)
 	{
 		wrong_msg(1);
@@ -131,7 +137,7 @@ int main(int argc, char *argv[])
 	}
 	 above_file = argv[1];
 	 under_file = argv[2];
-	 char * png = ".png";
+	 char * png = ".png";	//输出后缀
 	if (argc == 4)
 	{
 		strcat_m(argv[3], png , re_file);
@@ -174,6 +180,7 @@ int main(int argc, char *argv[])
 
 	Mat rgb_a = white_back;
 	Mat rgb_u = black_back;
+
 	// 转为灰度图
 	Mat grey_a = RGB_to_grey(rgb_a, width, height);
 	Mat grey_u = RGB_to_grey(rgb_u, width, height);
